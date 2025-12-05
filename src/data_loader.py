@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os
 
 
 def load_data(filepath):
@@ -7,6 +8,10 @@ def load_data(filepath):
     Loads insurance data using the pipe symbol (|) as a separator.
     """
     # 1. Load Data with Pipe Separator
+    if not os.path.exists(filepath):
+        raise ValueError(f"File not found: {filepath}")
+
+        # --- 2. LOAD DATA ---
     try:
         # We explicitly set sep='|' because the data shows "Field1|Field2|Field3"
         df = pd.read_csv(filepath, sep='|', low_memory=False)
