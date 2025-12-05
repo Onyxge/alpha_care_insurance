@@ -1,0 +1,14 @@
+stages:
+  eda_pipeline:
+    cmd: python -m src.main_eda
+    deps:
+      - data/Raw/MachineLearningRating_v3.txt
+      - src/data_loader.py
+      - src/eda_utils.py
+      - src/main_eda.py
+    outs:
+      - reports/figures/1_risk_by_province.png
+      - reports/figures/2_severity_by_vehicle.png
+      - reports/figures/3_monthly_profitability.png
+      - reports/figures/4_gender_risk.png
+      - reports/figures/5_zipcode_risk.png

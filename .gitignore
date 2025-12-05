@@ -2,3 +2,4 @@
 .venv/
 notes
 /.idea/
+src/__pycache__/

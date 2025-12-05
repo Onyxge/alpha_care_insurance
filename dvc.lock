@@ -1,0 +1,42 @@
+schema: '2.0'
+stages:
+  eda_pipeline:
+    cmd: python -m src.main_eda
+    deps:
+    - path: data/Raw/MachineLearningRating_v3.txt
+      hash: md5
+      md5: f6b7009b68ae21372b7deca9307fbb23
+      size: 529363713
+    - path: src/data_loader.py
+      hash: md5
+      md5: 7e9283b8332485c720531fe5ddbd5cd9
+      size: 2634
+    - path: src/eda_utils.py
+      hash: md5
+      md5: 5de40b8edd20b5e90bd1cf4dbbd70a84
+      size: 7619
+    - path: src/main_eda.py
+      hash: md5
+      md5: 55410f6b26109fc0bdc613f59a238486
+      size: 1143
+    outs:
+    - path: reports/figures/1_risk_by_province.png
+      hash: md5
+      md5: 9ac5c53b4fd15c302855dd152fde3cca
+      size: 39787
+    - path: reports/figures/2_severity_by_vehicle.png
+      hash: md5
+      md5: f262fa5a7d6bb8c7540aead860e1b682
+      size: 50488
+    - path: reports/figures/3_monthly_profitability.png
+      hash: md5
+      md5: 315e7785c608a4f38b38ea47ca12cdda
+      size: 61606
+    - path: reports/figures/4_gender_risk.png
+      hash: md5
+      md5: e1edd7607a729222161009c0cb3cd703
+      size: 34414
+    - path: reports/figures/5_zipcode_risk.png
+      hash: md5
+      md5: ce9aea62fbd2742203345df3e12db950
+      size: 32361
