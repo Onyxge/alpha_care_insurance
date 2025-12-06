@@ -3,9 +3,15 @@ import os
 import pandas as pd
 import pytest
 
-# Ensure we can import from src
-sys.path.append(os.path.abspath(os.path.join(os.getcwd(), 'src')))
+# --- THE FIX IS HERE ---
+# 1. Get the directory of THIS file (tests/)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 2. Get the parent directory (alpha-care-insurance/)
+parent_dir = os.path.dirname(current_dir)
+# 3. Add the parent directory to sys.path
+sys.path.insert(0, parent_dir)
 
+# Now Python can find 'src' inside the parent directory
 from src.data_loader import load_data
 
 
