@@ -129,6 +129,6 @@ The pipeline is automated using **DVC**.
 
 ## Contributors
 
-* **Your Name** – Lead Data Analyst / ML Engineer
+* **Yonatan** – Lead Data Analyst / ML Engineer
 
 This project is part of the **10 Academy Artificial Intelligence Mastery** program.
