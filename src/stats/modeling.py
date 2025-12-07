@@ -93,3 +93,7 @@ def eval_classification(y_true, y_pred):
     except Exception as e:
         print(f"Classification metrics error: {e}")
         return None
+
+
+def regression_metrics(y_true, y_pred):
+    return eval_regression(y_true, y_pred)
