@@ -9,12 +9,12 @@ stages:
       size: 529363713
     - path: src/data_loader.py
       hash: md5
-      md5: 7e9283b8332485c720531fe5ddbd5cd9
-      size: 2634
+      md5: edea990396470143dc267c9beb15ebb6
+      size: 2769
     - path: src/eda_utils.py
       hash: md5
-      md5: 5de40b8edd20b5e90bd1cf4dbbd70a84
-      size: 7619
+      md5: e78af44856b4872441d4fdfc7b4a79f3
+      size: 7259
     - path: src/main_eda.py
       hash: md5
       md5: 55410f6b26109fc0bdc613f59a238486
@@ -22,12 +22,12 @@ stages:
     outs:
     - path: reports/figures/1_risk_by_province.png
       hash: md5
-      md5: 9ac5c53b4fd15c302855dd152fde3cca
-      size: 39787
+      md5: ff7f031749c8182e1579d86bdabf522e
+      size: 38240
     - path: reports/figures/2_severity_by_vehicle.png
       hash: md5
-      md5: f262fa5a7d6bb8c7540aead860e1b682
-      size: 50488
+      md5: b0ddb776b09ce0ba09c8ebb64b932504
+      size: 48534
     - path: reports/figures/3_monthly_profitability.png
       hash: md5
       md5: 315e7785c608a4f38b38ea47ca12cdda
