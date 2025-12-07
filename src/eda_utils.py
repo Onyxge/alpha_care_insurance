@@ -20,88 +20,90 @@ def check_columns(df, required):
         return False
     return True
 
+
 def generate_key_plots(df, save_dir='reports/figures'):
     """
     Generates the 3 initial key visualizations required for the AlphaCare interim report.
-    Returns a dictionary of matplotlib figure objects.
+    1. Geographic Risk (Loss Ratio by Province)
+    2. Claim Severity Distribution (Boxen Plot)
+    3. Monthly Profitability Timeline
     """
+    # Create directory if it doesn't exist
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
+    # Define required columns for these specific plots
     required_cols = ['TotalClaims', 'TotalPremium', 'Province', 'VehicleType', 'TransactionMonth']
 
     if not check_columns(df, required_cols):
-        return {}
-
-    figs = {}
+        return
 
     # --- PLOT 1: Geographic Risk Analysis (Loss Ratio by Province) ---
     print("Generating Plot 1: Risk Exposure by Province...")
-    fig1 = plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(12, 6))
 
+    # Calculate aggregate metrics per province
     province_risk = df.groupby('Province')[['TotalClaims', 'TotalPremium']].sum().reset_index()
-    province_risk['AggregateLossRatio'] = (
-        province_risk['TotalClaims'] / province_risk['TotalPremium'].replace(0, 1)
-    )
+
+    # Avoid division by zero
+    province_risk['AggregateLossRatio'] = province_risk['TotalClaims'] / province_risk['TotalPremium'].replace(0, 1)
     province_risk = province_risk.sort_values('AggregateLossRatio', ascending=False)
 
-    sns.barplot(x='AggregateLossRatio', y='Province', data=province_risk,
-                palette='viridis', hue='Province', legend=False)
+    sns.barplot(x='AggregateLossRatio', y='Province', data=province_risk, palette='viridis', hue='Province',
+                legend=False)
     plt.axvline(x=1.0, color='r', linestyle='--', label='Breakeven Point (1.0)')
+
     plt.title('Plot 1: Risk Exposure by Province (Aggregate Loss Ratio)', fontsize=16)
-    plt.xlabel('Loss Ratio')
-    plt.ylabel('Province')
+    plt.xlabel('Loss Ratio (Claims / Premium)', fontsize=12)
+    plt.ylabel('Province', fontsize=12)
     plt.legend()
     plt.tight_layout()
+    plt.savefig(f"{save_dir}/1_risk_by_province.png")
+    plt.show()
 
-    fig1.savefig(f"{save_dir}/1_risk_by_province.png")
-    figs["risk_by_province"] = fig1
-
-    # --- PLOT 2: Claim Severity by Vehicle Type ---
+    # --- PLOT 2: Outlier Detection & Risk by Vehicle Type ---
     print("Generating Plot 2: Claim Severity by Vehicle Type...")
-    fig2 = plt.figure(figsize=(14, 7))
+    plt.figure(figsize=(14, 7))
 
+    # Filter for positive claims only (severity)
     claims_only = df[df['TotalClaims'] > 0].copy()
-    sns.boxenplot(x='VehicleType', y='TotalClaims', data=claims_only,
-                  palette='rocket', hue='VehicleType', legend=False)
+
+    # Use boxenplot for better outlier visualization on large datasets
+    sns.boxenplot(x='VehicleType', y='TotalClaims', data=claims_only, palette='rocket', hue='VehicleType', legend=False)
 
     plt.title('Plot 2: Claim Severity Distribution by Vehicle Type', fontsize=16)
     plt.xticks(rotation=45)
+    plt.xlabel('Vehicle Type', fontsize=12)
+    plt.ylabel('Total Claim Amount (ZAR)', fontsize=12)
     plt.tight_layout()
-
-    fig2.savefig(f"{save_dir}/2_severity_by_vehicle.png")
-    figs["severity_by_vehicle"] = fig2
+    plt.savefig(f"{save_dir}/2_severity_by_vehicle.png")
+    plt.show()
 
     # --- PLOT 3: Monthly Profitability Timeline ---
     print("Generating Plot 3: Monthly Margin...")
-    fig3 = plt.figure(figsize=(14, 6))
+    plt.figure(figsize=(14, 6))
 
+    # Resample by month
     monthly_stats = df.set_index('TransactionMonth').resample('ME')[['TotalPremium', 'TotalClaims']].sum()
 
-    sns.lineplot(data=monthly_stats[['TotalPremium', 'TotalClaims']],
-                 markers=True, dashes=False)
+    # Plotting
+    sns.lineplot(data=monthly_stats[['TotalPremium', 'TotalClaims']], markers=True, dashes=False)
 
-    plt.fill_between(monthly_stats.index, monthly_stats['TotalClaims'],
-                     monthly_stats['TotalPremium'],
+    # Fill areas for profit/loss visualization
+    plt.fill_between(monthly_stats.index, monthly_stats['TotalClaims'], monthly_stats['TotalPremium'],
                      where=(monthly_stats['TotalPremium'] > monthly_stats['TotalClaims']),
                      interpolate=True, color='green', alpha=0.1, label='Profit')
-
-    plt.fill_between(monthly_stats.index, monthly_stats['TotalClaims'],
-                     monthly_stats['TotalPremium'],
+    plt.fill_between(monthly_stats.index, monthly_stats['TotalClaims'], monthly_stats['TotalPremium'],
                      where=(monthly_stats['TotalPremium'] <= monthly_stats['TotalClaims']),
                      interpolate=True, color='red', alpha=0.1, label='Loss')
 
     plt.title('Plot 3: Monthly Profitability Timeline', fontsize=16)
-    plt.xlabel('Date')
-    plt.ylabel('Amount (ZAR)')
+    plt.xlabel('Date', fontsize=12)
+    plt.ylabel('Amount (ZAR)', fontsize=12)
     plt.legend()
     plt.tight_layout()
-
-    fig3.savefig(f"{save_dir}/3_monthly_profitability.png")
-    figs["monthly_profitability"] = fig3
-
-    print("All plots generated and saved successfully.")
-    return figs
+    plt.savefig(f"{save_dir}/3_monthly_profitability.png")
+    plt.show()
 
 def generate_comprehensive_stats(df, save_dir='reports/figures'):
     """
