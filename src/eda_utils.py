@@ -20,7 +20,6 @@ def check_columns(df, required):
         return False
     return True
 
-
 def generate_key_plots(df, save_dir='reports/figures'):
     """
     Generates the 3 initial key visualizations required for the AlphaCare interim report.
