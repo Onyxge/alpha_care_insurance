@@ -105,7 +105,6 @@ def generate_key_plots(df, save_dir='reports/figures'):
     plt.savefig(f"{save_dir}/3_monthly_profitability.png")
     plt.show()
 
-
 def generate_comprehensive_stats(df, save_dir='reports/figures'):
     """
     Calculates and visualizes the specific metrics defined in the brief:
