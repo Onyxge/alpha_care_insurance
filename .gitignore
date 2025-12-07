@@ -4,3 +4,4 @@ notes
 /.idea/
 src/__pycache__/
 __pycache__/
+/notebooks/output
