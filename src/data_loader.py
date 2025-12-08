@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import os
 
-
 def load_data(filepath):
     """
     Loads insurance data using the pipe symbol (|) as a separator.
@@ -83,5 +82,4 @@ def load_data(filepath):
     for col in cat_cols:
         if col in df.columns:
             df[col] = df[col].astype(str)
-
     return df
