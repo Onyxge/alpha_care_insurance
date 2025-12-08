@@ -3,8 +3,7 @@ from typing import List, Dict, Any
 
 # Assuming hypothesis.py is in the same directory (src/stats)
 # and contains: t_test, chi_square, cohens_d, translate_insight
-from hypothesis import t_test, chi_square, cohens_d, translate_insight
-
+from .hypothesis import t_test, chi_square, cohens_d, translate_insight
 
 class ABTester:
     """
