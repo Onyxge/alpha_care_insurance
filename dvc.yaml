@@ -1,8 +1,17 @@
 stages:
-  eda_pipeline:
-    cmd: python -m src.main_eda
+  preprocess:
+    cmd: python -m src.processed
     deps:
       - data/Raw/MachineLearningRating_v3.txt
+      - src/processed.py
+      - src/data_loader.py
+    outs:
+      - data/Processed/cleaned_data.csv
+
+  eda:
+    cmd: python -m src.main_eda
+    deps:
+      - data/Processed/cleaned_data.csv
       - src/data_loader.py
       - src/eda_utils.py
       - src/main_eda.py
@@ -12,3 +21,23 @@ stages:
       - reports/figures/3_monthly_profitability.png
       - reports/figures/4_gender_risk.png
       - reports/figures/5_zipcode_risk.png
+
+  modeling:
+    cmd: python -m src.stats.run_modeling
+    deps:
+      - data/Processed/cleaned_data.csv
+      - src/data_loader.py
+      - src/stats/modeling.py
+      - src/stats/run_modeling.py
+    outs:
+      - reports/model_metrics.csv
+
+  ab_testing:
+    cmd: python -m src.stats.run_ab_tests
+    deps:
+      - data/Processed/cleaned_data.csv
+      - src/data_loader.py
+      - src/stats/ab_testing.py
+      - src/stats/run_ab_tests.py
+    outs:
+      - reports/ab_test_results.csv
