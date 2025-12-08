@@ -40,3 +40,111 @@ stages:
       hash: md5
       md5: ce9aea62fbd2742203345df3e12db950
       size: 32361
+  eda:
+    cmd: python -m src.main_eda
+    deps:
+    - path: data/Processed/cleaned_data.csv
+      hash: md5
+      md5: 07c5c88333c80072123af1759bcaef0d
+      size: 521689359
+    - path: src/data_loader.py
+      hash: md5
+      md5: daec58d0095a9e0357369518689d675b
+      size: 2767
+    - path: src/eda_utils.py
+      hash: md5
+      md5: 53a29b357774a47d4baca6ee51b3b10a
+      size: 7258
+    - path: src/main_eda.py
+      hash: md5
+      md5: 55410f6b26109fc0bdc613f59a238486
+      size: 1143
+    outs:
+    - path: reports/figures/1_risk_by_province.png
+      hash: md5
+      md5: ff7f031749c8182e1579d86bdabf522e
+      size: 38240
+    - path: reports/figures/2_severity_by_vehicle.png
+      hash: md5
+      md5: b0ddb776b09ce0ba09c8ebb64b932504
+      size: 48534
+    - path: reports/figures/3_monthly_profitability.png
+      hash: md5
+      md5: 315e7785c608a4f38b38ea47ca12cdda
+      size: 61606
+    - path: reports/figures/4_gender_risk.png
+      hash: md5
+      md5: e1edd7607a729222161009c0cb3cd703
+      size: 34414
+    - path: reports/figures/5_zipcode_risk.png
+      hash: md5
+      md5: ce9aea62fbd2742203345df3e12db950
+      size: 32361
+  modeling:
+    cmd: python -m src.stats.run_modeling
+    deps:
+    - path: data/Processed/cleaned_data.csv
+      hash: md5
+      md5: 07c5c88333c80072123af1759bcaef0d
+      size: 521689359
+    - path: src/data_loader.py
+      hash: md5
+      md5: daec58d0095a9e0357369518689d675b
+      size: 2767
+    - path: src/stats/modeling.py
+      hash: md5
+      md5: 8161f7e5f5a1bee1dacba802e5f8ba80
+      size: 5005
+    - path: src/stats/run_modeling.py
+      hash: md5
+      md5: 10958699bbe88e3a76a6199e57670bff
+      size: 2753
+    outs:
+    - path: reports/model_metrics.csv
+      hash: md5
+      md5: d75e2609de4086e21da44f06e992d633
+      size: 364
+  preprocess:
+    cmd: python -m src.processed
+    deps:
+    - path: data/Raw/MachineLearningRating_v3.txt
+      hash: md5
+      md5: f6b7009b68ae21372b7deca9307fbb23
+      size: 529363713
+    - path: src/data_loader.py
+      hash: md5
+      md5: daec58d0095a9e0357369518689d675b
+      size: 2767
+    - path: src/processed.py
+      hash: md5
+      md5: d64a5b7e02b40ec1d99a532dbda0d856
+      size: 349
+    outs:
+    - path: data/Processed/cleaned_data.csv
+      hash: md5
+      md5: 07c5c88333c80072123af1759bcaef0d
+      size: 521689359
+  ab_testing:
+    cmd: python -m src.stats.run_ab_tests
+    deps:
+    - path: data/Processed/cleaned_data.csv
+      hash: md5
+      md5: 07c5c88333c80072123af1759bcaef0d
+      size: 521689359
+    - path: src/data_loader.py
+      hash: md5
+      md5: daec58d0095a9e0357369518689d675b
+      size: 2767
+    - path: src/stats/ab_testing.py
+      hash: md5
+      md5: c946fc8595edd9b06f064f980946b25e
+      size: 7356
+    - path: src/stats/run_ab_tests.py
+      hash: md5
+      md5: df57d4de3bd914ddbbb396e053d28826
+      size: 3619
+    outs:
+    - path: reports/ab_test_results.csv
+      hash: md5
+      md5: 97127a839afa88fe82db81eefcc9d681
+      size: 516

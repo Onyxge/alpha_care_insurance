@@ -1,0 +1,15 @@
+=== A/B Hypothesis Testing Report ===
+
+--- HYPOTHESIS 1: Province Risk ---
+Risky: Gauteng vs Safe: Northern Cape
+  > Test: Significant difference (p=0.0053)
+  > Test: Significant difference (p=0.0156)
+
+--- HYPOTHESIS 2: Zip Code Risk ---
+Risky Zip: 2470 vs Safe Zip: 8586
+  > Test: No significant difference (p=1.0000)
+  > Severity (T-Test): Insufficient claims data for groups. (p=N/A)
+
+--- HYPOTHESIS 4: Gender Risk ---
+  > Test: No significant difference (p=0.9515)
+  > Test: No significant difference (p=0.5680)
