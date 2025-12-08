@@ -4,5 +4,5 @@ notes
 /.idea/
 src/__pycache__/
 __pycache__/
-/notebooks/output
- src/reports/
+ src/reports
+notebooks/reports
